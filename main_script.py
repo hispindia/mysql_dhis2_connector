@@ -1,7 +1,7 @@
 # main_script.py
 
 # Author: sourabhB
-
+import logging
 import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
 from dhis2_api_interaction import get_org_unit_and_option_data, create_enrollment, check_existing_tei
@@ -46,9 +46,9 @@ def create_enrollment_for_row(row):
     response = create_enrollment(enrollment_data, org_unit_id)
 
     if response.status_code == 200:
-        print(f"Enrollment created successfully for BeneficiaryRegID {BeneficiaryRegID}")
+        logging.info(f"Enrollment created successfully for BeneficiaryRegID {BeneficiaryRegID}")
     else:
-        print(f"Failed to create enrollment. Status code: {response.status_code}")
+        logging.error(f"Failed to create enrollment for BeneficiaryRegID {BeneficiaryRegID}. Status code: {response.status_code}")
 
 try:
     mysql_connection = connect_to_mysql()
@@ -86,11 +86,10 @@ try:
                 executor.submit(create_enrollment_for_row, row)
 
 except Exception as e:
-    print(f"Error: {str(e)}")
+    logging.error(f"Error: {str(e)}")
 finally:
     if 'mysql_cursor' in locals():
         mysql_cursor.close()
     if 'mysql_connection' in locals() and mysql_connection.is_connected():
         mysql_connection.close()
-        print("MySQL connection closed")
-
+        logging.info("MySQL connection closed")
