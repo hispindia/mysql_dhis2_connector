@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dhis2_api_interaction import get_org_unit_and_option_data, create_enrollment, check_existing_tei
 from database_connection import connect_to_mysql
 
+logging.basicConfig(filename='enrollment.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 num_threads = 20
 
