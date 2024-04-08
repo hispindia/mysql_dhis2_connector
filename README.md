@@ -7,7 +7,10 @@
 - `pandas`
 
 #### Installation
-
+##install python
+sudo apt-get install python
+##install pip
+sudo apt-get install python3-pip
 ```bash
 pip install mysql-connector-python requests pandas
 ```
